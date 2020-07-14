@@ -29,9 +29,9 @@ class Stack:
 
     def pop(self):
         if self.size > 0:
-            x = self.storage.remove_tail()
+            remove = self.storage.remove_tail()
             self.size -= 1
-            return x
+            return remove
         else:
             return None
     
