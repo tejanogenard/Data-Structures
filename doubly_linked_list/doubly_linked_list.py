@@ -72,7 +72,17 @@ class DoublyLinkedList:
     the old tail node's next pointer accordingly.
     """
     def add_to_tail(self, value):
-        pass
+        if self.head is None:
+            new_node = ListNode(value)
+            new_node.prev = None
+            self.head = new_node
+        else: 
+            new_node = ListNode(value)
+            current = self.head
+            while current.next:
+                current = current.next
+            new_node.prev = current
+            new_node.next = None
             
     """
     Removes the List's current tail node, making the 
@@ -101,7 +111,44 @@ class DoublyLinkedList:
     order of the other elements of the List.
     """
     def delete(self, node):
-        pass
+        current = self.head
+        while current:
+            # Do Not loop this use each case to write in the appropriate functions above
+                if current.value == node and current == self.head:
+                    #case 1: Single node in the linked list
+                    if not current.next:
+                        current = None 
+                        self.head = None 
+                        return
+                    #case 2: Deleting a head node of a linked list
+                    else:
+                        nxt = current.next
+                        current.next = None 
+                        nxt.prev = None 
+                        current = None 
+                        self.head = nxt
+                        return
+
+                elif current.value == node:
+                    #case 3: Deletes the input node from the List, preserving the list
+                    if current.next:
+                        nxt = current.next
+                        prev = current.prev
+                        prev.next = nxt 
+                        nxt.prev = prev
+                        current.next = None 
+                        current.prev = None
+                        current = None 
+                        return
+                        #case 4: Deleting a tail node of a linked list 
+                    else:
+                        prev = current.prev 
+                        prev.next = None 
+                        current.prev = None 
+                        current = None
+                        return
+                    
+
 
     """
     Finds and returns the maximum value of all the nodes 
