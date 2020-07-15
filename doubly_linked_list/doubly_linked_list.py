@@ -45,15 +45,25 @@ class DoublyLinkedList:
     the old head node's previous pointer accordingly.
     """
     def add_to_head(self, value):
+    #create an instance of a listnode with value 
+        new_node = ListNode(value)
+    #increment the linked list 
+        self.length += 1
+    #if the list is empty 
         if self.head is None:
-            new_node = ListNode(value)
-            new_node.prev = None
+    #set head and tail to new node instance
             self.head = new_node
+            self.tail = new_node
+
+    #else the list is not empty 
         else:
-            new_node = ListNode(value)
+    #set current head. prev to be new_Node 
             self.head.prev = new_node
+    #set new_node.next to be the current head 
             new_node.next = self.head
+    #Change the current to be the new_Node
             self.head = new_node
+    #set new_node.prev to be None 
             new_node.prev = None
         
 
@@ -64,7 +74,29 @@ class DoublyLinkedList:
     Returns the value of the removed Node.
     """
     def remove_from_head(self):
-        pass
+        #if the list is empty return none 
+        if self.length == 0:
+            return None 
+        #if the list is not empty    
+        #store the value of the current head 
+        node = self.head
+        #decrement the linked list 
+        self.length -= 1
+        #if the head.next is not none 
+        if self.head.next is not None:
+        #set the the next nodes prev (head node) to be none 
+            self.head.next.prev = None
+        #set the new head node 
+            self.head = self.head.next 
+        else:
+            #if head.next is none
+            #set head to none 
+            # set tail to
+            self.head = None
+            self.tail = None
+        ##return vale 
+        return node.value
+        
             
     """
     Wraps the given value in a ListNode and inserts it 
@@ -72,17 +104,24 @@ class DoublyLinkedList:
     the old tail node's next pointer accordingly.
     """
     def add_to_tail(self, value):
+        #create instance of listnode with value 
+        new_node = ListNode(value)
+        #increment the length of the list 
+        self.length += 1
+
+        #if the list is empty
         if self.head is None:
-            new_node = ListNode(value)
-            new_node.prev = None
+            #set the new node 
             self.head = new_node
+            self.tail = new_node
+        #if the list is not empty
         else: 
-            new_node = ListNode(value)
-            current = self.head
-            while current.next:
-                current = current.next
-            new_node.prev = current
-            new_node.next = None
+            #set new node's prev to current tail 
+            new_node.prev = self.tail
+            #set tail.next to new node 
+            self.tail.next = new_node
+            #set tail to the new node 
+            self.tail = new_node
             
     """
     Removes the List's current tail node, making the 
@@ -90,7 +129,28 @@ class DoublyLinkedList:
     Returns the value of the removed Node.
     """
     def remove_from_tail(self):
-        pass
+        # #if the list is empty
+        if self.length == 0:
+            return None 
+        # #store the value of the current tail
+        node = self.tail
+        # #decrememnt the length 
+        self.length -=1
+        # #if tail.prev points to a node
+        if self.tail.prev is not None:
+        # #set tail.prev.next to none
+            self.tail.prev.next = None 
+        # #set tail to tail.prev
+            self.tail = self.tail.prev 
+        else:
+            #set head to None 
+            self.head = None 
+            #set tail to None 
+            self.tail = None 
+
+        # #return the value 
+        return node.value
+
             
     """
     Removes the input node from its current spot in the 
@@ -111,42 +171,49 @@ class DoublyLinkedList:
     order of the other elements of the List.
     """
     def delete(self, node):
-        current = self.head
-        while current:
-            # Do Not loop this use each case to write in the appropriate functions above
-                if current.value == node and current == self.head:
-                    #case 1: Single node in the linked list
-                    if not current.next:
-                        current = None 
-                        self.head = None 
-                        return
-                    #case 2: Deleting a head node of a linked list
-                    else:
-                        nxt = current.next
-                        current.next = None 
-                        nxt.prev = None 
-                        current = None 
-                        self.head = nxt
-                        return
+        #if the list is empty return None
+        if self.length == 0: 
+            return None
+        
+        #decrement the length 
+        self.length -=1 
+        #if there is only 1 element in the list 
+        if self.head == self.tail:
+        #set both to none 
+            self.head = None
+            self.tail = None 
+        #return the value 
+            return node.value    
+        #if head    
+        elif node == self.head:
+        #set head to the nezt node 
+            self.head = self.head.next 
+        #set node to none
+            node.next = None 
+        #set head.prev to none
+            self.head.prev = None 
+        #return value
+            return node.value
+        #if tail 
+        elif node == self.tail:
+        #set tail to tail.prev 
+            self.tail = self.tai.prev 
+        #set node.prev to non 
+            node.prev = None
+        #set the next node pointer to none 
+            self.tail.next = None 
+        else:
+        #set the node.prev
+            node_prev = node.prev
+        #set the node.next
+            node_next = node.next
+        #set the node.prev next 
+            node.prev.next = node.next
+        #set the node.next prev
+            node_next.prev = node.prev
+            return node.value
 
-                elif current.value == node:
-                    #case 3: Deletes the input node from the List, preserving the list
-                    if current.next:
-                        nxt = current.next
-                        prev = current.prev
-                        prev.next = nxt 
-                        nxt.prev = prev
-                        current.next = None 
-                        current.prev = None
-                        current = None 
-                        return
-                        #case 4: Deleting a tail node of a linked list 
-                    else:
-                        prev = current.prev 
-                        prev.next = None 
-                        current.prev = None 
-                        current = None
-                        return
+        
                     
 
 
