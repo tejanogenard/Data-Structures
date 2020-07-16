@@ -17,20 +17,71 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        if value < self.value:
+            if self.left is None:
+                self.left = BSTNode(value)
+            else:
+                self.left.insert(value)
+        else:
+            if self.right is None:
+                self.right = BSTNode(value)
+            else:
+                self.right.insert(value)
+
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        #1. base case 
+            # if the value of this node matches the target, then TRUE 
+            # compare the target against this node's value to determine which direction to go in
+        #2. how do we move closer to the base case
+            # if the target is less 
+                #if left is Null
+                #value is not contained in the tree 
+                # else call 'contains' on the left child 
+            #else if the target is more 
+                #if right is Null
+                #value is not contaied in the tree 
+                # else call 'contains' on the right child
+
+        if target == self.value:
+            return True
+        elif target < self.value:
+            if self.left is None:
+                return False
+            else: 
+                return self.left.contains(target)
+        else:
+            if self.right is None:
+                return False 
+            else: 
+                return self.right.contains(target)
+        
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        #Check the right most value in the tree 
+        # we'll keep going right until there is no right child node 
+
+        if self.right is None:      #base case
+            return self.value
+        else:
+            return self.right.get_max() #recurisve statement
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        # call the anonymous function on 'self.value'
+        # if this node has a left child 
+            #pass the anonymous fn to it
+        #if this node has a right child 
+            #pass the anonymous fn to it 
+            
+        fn(self.value)
+        if self.right is not None:
+            self.right.for_each(fn)
+        if self.left is not None:
+            self.left.for_each(fn)
 
     # Part 2 -----------------------
 
